@@ -1,3 +1,9 @@
+// @deno-types="./asset-url.d.ts"
+import hatUrl from "./assets/blkWhiteTriangleHat.png?no-inline";
+
+// @deno-types="./asset-url.d.ts"
+import confettiUrl from "./assets/rainbowConfetti.png?no-inline";
+
 const portrait = document.querySelector<HTMLDivElement>("#portrait")!;
 const spin = document.querySelector<HTMLButtonElement>("#spin")!;
 
@@ -5,7 +11,24 @@ const spin = document.querySelector<HTMLButtonElement>("#spin")!;
 const face = document.createElementNS("http://www.w3.org/2000/svg", "svg");
 face.setAttribute("viewBox", "0 0 200 200");
 face.setAttribute("role", "img");
-face.setAttribute("aria-label", "A neutral face");
+face.setAttribute(
+  "aria-label",
+  "A neutral face wearing a black and white triangle hat with a colorful confetti background",
+);
+
+// rainbowConfetti.png: Personally developed image asset using Pixilart.com
+const backgroundImage = document.createElementNS(
+  "http://www.w3.org/2000/svg",
+  "image",
+);
+
+backgroundImage.setAttribute("href", confettiUrl);
+backgroundImage.setAttribute("x", "0");
+backgroundImage.setAttribute("y", "-50");
+backgroundImage.setAttribute("width", "250");
+backgroundImage.setAttribute("height", "250");
+
+face.append(backgroundImage);
 
 const head = document.createElementNS("http://www.w3.org/2000/svg", "ellipse");
 head.setAttribute("cx", "100");
@@ -58,6 +81,20 @@ mouth.setAttribute("stroke", "#302c29");
 mouth.setAttribute("stroke-width", "4");
 mouth.setAttribute("stroke-linecap", "round");
 face.append(mouth);
+
+// blkWhiteTriangleHat.png: Personally developed image asset using Pixilart.com
+const hatImage = document.createElementNS(
+  "http://www.w3.org/2000/svg",
+  "image",
+);
+
+hatImage.setAttribute("href", hatUrl);
+hatImage.setAttribute("x", "80");
+hatImage.setAttribute("y", "0");
+hatImage.setAttribute("width", "40");
+hatImage.setAttribute("height", "40");
+
+face.append(hatImage);
 
 portrait.append(face);
 
