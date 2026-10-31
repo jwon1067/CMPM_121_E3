@@ -59,6 +59,98 @@ mouth.setAttribute("stroke-width", "4");
 mouth.setAttribute("stroke-linecap", "round");
 face.append(mouth);
 
+face.setAttribute(
+  "aria-label",
+  "A cheerful face with symmetrical freckles, decorative circles, triangles, and stars",
+);
+
+// Creating SVG elements
+function addShape(type: string, attributes: Record<string, string>) {
+  const shape = document.createElementNS("http://www.w3.org/2000/svg", type);
+
+  for (const [key, value] of Object.entries(attributes)) {
+    shape.setAttribute(key, value);
+  }
+
+  face.append(shape);
+}
+
+// 100 freckles arranged symmetrically on both cheeks
+for (let row = 0; row < 10; row++) {
+  for (let col = 0; col < 5; col++) {
+    const x = 48 + col * 8;
+    const y = 95 + row * 4;
+
+    // Left cheek
+    addShape("circle", {
+      cx: String(x),
+      cy: String(y),
+      r: "1.7",
+      fill: "#a65c45",
+    });
+
+    // Right cheek
+    addShape("circle", {
+      cx: String(200 - x),
+      cy: String(y),
+      r: "1.7",
+      fill: "#a65c45",
+    });
+  }
+}
+
+// 100 decorative circles around the head
+for (let i = 0; i < 100; i++) {
+  const angle = (i / 100) * Math.PI * 2;
+
+  addShape("circle", {
+    cx: String(100 + 82 * Math.cos(angle)),
+    cy: String(100 + 82 * Math.sin(angle)),
+    r: "3",
+    fill: "#e5a34c",
+  });
+}
+
+// 16 decorative triangles around the portrait
+for (let i = 0; i < 16; i++) {
+  const angle = (i / 16) * Math.PI * 2;
+  const x = 100 + 72 * Math.cos(angle);
+  const y = 100 + 72 * Math.sin(angle);
+
+  const points = [
+    `${x},${y - 5}`,
+    `${x - 4},${y + 4}`,
+    `${x + 4},${y + 4}`,
+  ].join(" ");
+
+  addShape("polygon", {
+    points,
+    fill: "#e58b83",
+  });
+}
+
+// 12 decorative stars around the portrait
+for (let i = 0; i < 12; i++) {
+  const angle = (i / 12) * Math.PI * 2;
+  const x = 100 + 65 * Math.cos(angle);
+  const y = 100 + 65 * Math.sin(angle);
+  const points = [];
+
+  for (let j = 0; j < 10; j++) {
+    const radius = j % 2 === 0 ? 5 : 2.3;
+    const a = (j / 10) * Math.PI * 2 - Math.PI / 2;
+
+    points.push(
+      `${x + radius * Math.cos(a)}, ${y + radius * Math.sin(a)}`,
+    );
+  }
+
+  addShape("polygon", {
+    points: points.join(" "),
+    fill: "#f4c542",
+  });
+}
+
 portrait.append(face);
 
 spin.addEventListener("click", () => {
